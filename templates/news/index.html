@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+<html>
+<head>
+  <title>News</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<p> catalog_detail-news_detail catalog_list-list_news catalog_item-news_item </p>
+{% block content %}
+  {% for news_item in catalognews %}
+    <div>
+      <h2><a href="{% url 'news_detail' news_item.id %}">{{ news_item.title}}</a><h2>
+      <div>
+        {{news_item.description}}
+      </div>
+    </div>
+  {% endfor %}
+  {% if list_news %}
+
+  {% else %}
+    <p>No polls are available.</p>
+  {% endif %}
+
+  <div class="pagination">
+    <span class="step-links">
+        {% if catalognews.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ catalognews.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ catalognews.number }} of {{ catalognews.paginator.num_pages }}.
+        </span>
+
+        {% if catalognews.has_next %}
+            <a href="?page={{ catalognews.next_page_number }}">next</a>
+            <a href="?page={{ catalognews.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+  </body>
+{% endblock %}
+</html>

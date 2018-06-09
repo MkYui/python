@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div>
+    <p>{{news_item}}</p>
+    <h2>{{news_item.news_texts|safe}}</h2>
+  </div>
+{% endblock %}

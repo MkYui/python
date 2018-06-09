@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}Home{% endblock %}
+
+{% block javascript %}
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+{% endblock %}
+
+  {% block contents %}
+    <div class="infinite-container">
+
+        {% for portal_item in catalogportal %}
+          <div class="infinite-item"><h1><a href="{% url 'portal_detail' portal_item.id %}">{{ portal_item.title}}</a></h1>
+            <div><a>{{ portal_item.public_date}}</a></div>
+            <div>
+              {{portal_item.description}}
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+</div>
+
+    <div class="loading" style="display: none;">
+      Loading...
+    </div>
+
+    {% if catalogportal.has_next %}
+      <a class="infinite-more-link" href="?page={{ catalogportal.next_page_number }}">Больше</a>
+    {% endif %}
+  {% endblock %}
+</div>
