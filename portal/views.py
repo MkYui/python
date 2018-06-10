@@ -9,10 +9,6 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render
 from django.contrib.auth.models import User
-#from __future__ import unicode_literals
-
-
-#from .forms import PostForm
 
 from django.utils import timezone
 from datetime import timedelta as tdelta

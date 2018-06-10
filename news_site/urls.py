@@ -33,14 +33,9 @@ from portal import views
 urlpatterns = [
     #url(r'^$', views.home, name='home'),
     path('', include('portal.urls')),
-    ######
-    #url(r'^filebrowser_filer/', include('ckeditor_filebrowser_filer.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    #url(r'^ckeditor/', include('ckeditor_uploader_urls')),
     path('admin/', admin.site.urls),
     path('news/', include('news.urls')),
-    #path('summernote/', include('django_summernote.urls')),
-    #path('ckeditor/', include('ckeditor_uploader.urls')),
     path('redactor/', include('redactor.urls')),
     url(r'^editor/(?P<id>.+)/$', SummernoteEditor.as_view(),
         name='django_summernote-editor'),

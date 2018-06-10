@@ -39,13 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news',
-    #'django_summernote',
+ 
     'ckeditor',
     'ckeditor_uploader',
-    #'filer',
-    #'ckeditor_filebrowser_filer',
+
     'portal',
-    #'taggit',
+
 ]
 
 MIDDLEWARE = [
