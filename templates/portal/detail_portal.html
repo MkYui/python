@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
+
+{% load comments static %}
+
 {% block contents %}
+
   <div class="container">
     <div>
 
       <h1>{{portal_item}}</h1>
       <p>{{portal_item.public_date}}</p>
       <h2>{{portal_item.portal_texts|safe}}</h2>
+
+
+      {% render_comment_list for portal_item %}
+      {% render_comment_form for portal_item %}
+</div>
+</div>
+
     </div>
-  </div>
+
 {% endblock %}

@@ -7,4 +7,11 @@ from .models import CatalogPortal
 # Register your models here.
 from ckeditor.widgets import CKEditorWidget
 
-admin.site.register(CatalogPortal)
+from django.forms import ModelForm
+from django.utils.timezone import now
+
+
+
+
+
+admin.site.register(CatalogPortal )

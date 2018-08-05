@@ -19,22 +19,30 @@ from importlib import import_module
 # Create your models here.
 from taggit.managers import TaggableManager
 
+from fluent_comments.moderation import moderate_model, comments_are_open, comments_are_moderated
+from fluent_comments.models import get_comments_for_model, CommentsRelation
+
+from django.urls import reverse
 class CatalogPortal(models.Model):
 
     title = models.CharField(max_length=200)
+
     public_date = models.DateTimeField(blank=True, null=True)
     portal_texts = RichTextUploadingField()
 
-    #def publish(self):
-    #    self.published_date = timezone.now()
-    #    self.save()
+    class Meta:
+        verbose_name = "message"
+        verbose_name_plural = "messages"
+    
+    def __str__(self):
+        return self.title
 
     def was_published_recently(self):
         return self.public_date >= timezone.now() - datetime.timedelta(days=1)
 
-    def __str__(self):
-        return self.title
 
 
-    def ntext(self):
-        return self.portal_texts
+moderate_model(
+    CatalogPortal,
+
+)

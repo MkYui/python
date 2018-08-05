@@ -24,10 +24,6 @@ class CatalogNews(models.Model):
     news_texts = RichTextUploadingField()
 
 
-    #def publish(self):
-    #    self.published_date = timezone.now()
-    #    self.save()
-
     def was_published_recently(self):
         return self.public_date >= timezone.now() - datetime.timedelta(days=1)
 

@@ -17,12 +17,17 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 
 from .models import CatalogPortal
+#from .models import Comments
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
+from django.views.decorators.csrf import csrf_protect
+from django.shortcuts import render, get_object_or_404
+from django.template.context import RequestContext
 
 def home(request):
 
-    list_portal = CatalogPortal.objects.all()
+    list_portal = CatalogPortal.objects.all().order_by("-id")
     #list_news = range(1, 1000)
     page = request.GET.get('page', 1)
 
@@ -50,3 +55,16 @@ def portal_detail(request, portal_id):
 
     }
     return render(request, 'portal/detail_portal.html', context)
+
+def add_comment_to_post(request, pk):
+    portal_item = get_object_or_404(CatalogPortal, pk=portal_id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = portal_item
+            comment.save()
+            return redirect('detail_portal', pk=portal_id)
+    else:
+        form = CommentForm()
+    return render(request, 'portal/add_comment_to_post.html', {'form': form})

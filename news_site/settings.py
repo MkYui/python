@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y6_h1*m9g%#0a4v&b%+$!^$u5a$=@nbnz8d!80#wi+$!sev$94'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
@@ -38,13 +38,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    #
     'news',
- 
+    'accounts',
+    'portal',
+    #
     'ckeditor',
     'ckeditor_uploader',
+    #
 
-    'portal',
 
+#'django.contrib.sites',
+
+    'django_comments',
+    'crispy_forms',
+    'fluent_comments',
+    #'threadedcomments',
+    #account
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +82,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                #'django.core.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -85,13 +101,23 @@ WSGI_APPLICATION = 'news_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+#
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -138,9 +164,6 @@ MEDIA_ROOT = os.path.join(tempfile.gettempdir(), 'ck_media')
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
-#CKEDITOR_UPLOAD_PATH = "uploads/"
-#CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
-#CKEDITOR_UPLOAD_PATH = MEDIA_ROOT +'ck_uploads/'
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
 CKEDITOR_RESTRICT_BY_USER = True
@@ -155,9 +178,6 @@ CKEDITOR_CONFIGS = {
 STATIC_URL = '/staticpath/'
 #CKEDITOR_UPLOAD_PATH = "uploads/"
 
-
-#X_FRAME_OPTIONS = 'SAMEORIGIN'
-
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -166,9 +186,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'static')
 
-#STATIC_URL = '/static/'
+
 MEDIA_URL = '/media/'
 
+USE_I18N = True
+USE_L10N = True
 
 STATICFILES_FINDERS = (
      'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -184,3 +206,32 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 STATIC_URL = '/static/'
+
+###############################comment
+COMMENTS_APP = 'fluent_comments'
+
+FLUENT_COMMENTS_FORM_CLASS = 'fluent_comments.forms.CompactLabelsCommentForm'
+
+# Optional settings for the compact style:
+FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url')
+FLUENT_COMMENTS_COMPACT_GRID_SIZE = 12
+FLUENT_COMMENTS_COMPACT_COLUMN_CSS_CLASS = "col-sm-{size}"
+
+FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = False
+FLUENT_COMMENTS_USE_EMAIL_MODERATION = False
+FLUENT_COMMENTS_MODERATE_AFTER_DAYS = 14
+FLUENT_COMMENTS_CLOSE_AFTER_DAYS = 60
+FLUENT_COMMENTS_AKISMET_ACTION = 'moderate'
+
+AKISMET_API_KEY = None  # Add your Akismet key here to enable Akismet support
+AKISMET_IS_TEST = True  # for development/example apps.
+### comment end
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Moderation
+FLUENT_COMMENTS_DEFAULT_MODERATOR = 'default'
+FLUENT_COMMENTS_CLOSE_AFTER_DAYS = None
+FLUENT_COMMENTS_MODERATE_BAD_WORDS = ()
+FLUENT_COMMENTS_MODERATE_AFTER_DAYS = None
+FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = True
