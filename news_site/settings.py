@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
-
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     #
 
-
 #'django.contrib.sites',
 
     'django_comments',
@@ -60,6 +59,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
 ]
 
 MIDDLEWARE = [
@@ -141,6 +141,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
+
+####
 LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
