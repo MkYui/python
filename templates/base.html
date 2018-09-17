@@ -1,14 +1,26 @@
+{% load i18n %}
 
+{% load account %}
+{% load staticfiles %}
 {% load static %}<!DOCTYPE html>
 <html>
   <head>
     <title>Site News</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/bootstrap.css' %}" />
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" type="text/js" href="{% static 'lib/bootstrap.min.js' %}"/>
 
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" type="text/js" href="{% static 'lib/jquery-3.3.1.min.js' %}"/>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" type="text/js" href="{% static 'lib/popper.min.js' %}"/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script><!---->
   </head>
   <body>
 
@@ -20,9 +32,35 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="/news/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/">Домой<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/news/">Новости <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="/oiijoioj/">Page error</a>
-
+        <a class="nav-item nav-link active" href="/accounts/login/">login <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/accounts/signup/">Regist <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/accounts/password/reset/">Reset password <span class="sr-only">(current)</span></a>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Профиль
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          {% if user.is_authenticated %}
+          <a class="dropdown-item" href="/accounts/profile/">Профиль</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+          {% else %}
+          {% endif %}
+          {% if user.is_authenticated %}
+              <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <button class="btn btn-primary" type="submit">{% trans 'Sign Out' %}</button>
+              </form>
+                  {% else %}
+                  <a class="dropdown-item" href="/accounts/login/">Login</a>
+              {% endif %}
+        </div>
+      </li>
       </div>
     </div>
   </nav>

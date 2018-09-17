@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}{% load i18n %}{% load i18n comments fluent_comments_tags %}
 
 {% load comments static %}
 
@@ -11,9 +11,18 @@
       <p>{{portal_item.public_date}}</p>
       <h2>{{portal_item.portal_texts|safe}}</h2>
 
+{% for comment in portal_item.comments.all %}
+    <div class="comment">
+        <!--<div class="date">{{ comment.created_date }}</div>-->
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+    </div>
+{% empty %}
+    <p>No comments here yet :(</p>
+{% endfor %}
+<a class="btn btn-default" href="{% url 'add_comment_to_post' pk=portal_item.pk %}">Add comment</a>
 
-      {% render_comment_list for portal_item %}
-      {% render_comment_form for portal_item %}
+</div>
 </div>
 </div>
 

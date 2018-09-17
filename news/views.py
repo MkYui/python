@@ -15,12 +15,14 @@ from django.contrib.auth.models import User
 
 #from django.shortcuts import render
 from django.shortcuts import redirect
-#from .forms import PostForm
 
+from django.urls import reverse_lazy
 from django.utils import timezone
 from datetime import timedelta as tdelta
 from django.views.generic import TemplateView
 # Create your views here.
+from django.views.generic import ListView, CreateView, UpdateView
+from .forms import PersonForm
 
 
 def news_index(request):
@@ -59,3 +61,22 @@ def handler404(request):
 
 def handler500(request):
     return render(request, '500.html')
+
+# add news
+
+class PersonListView(ListView):
+    model = CatalogNews
+    context_object_name = 'people'
+
+
+class PersonCreateView(CreateView):
+    model = CatalogNews
+    fields = ('title', 'news_texts',)
+    success_url = reverse_lazy('person_list')
+
+
+class PersonUpdateView(UpdateView):
+    model = CatalogNews
+    form_class = PersonForm
+    template_name = 'news/person_update_form.html'
+    success_url = reverse_lazy('person_list')

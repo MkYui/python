@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+{% load i18n %}
+
 <html>
 <head>
   <title>News</title>
@@ -41,6 +44,7 @@
             <a href="?page={{ catalognews.paginator.num_pages }}">Конец &raquo;</a>
         {% endif %}
     </span>
+
   </div>
   </body>
 {% endblock %}

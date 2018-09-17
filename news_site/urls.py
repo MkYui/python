@@ -31,9 +31,16 @@ from django.conf import global_settings
 
 from django.views.static import serve
 from portal import views
-
+from django.views.generic.base import TemplateView
 import django_comments.urls
 COMMENT_URLS = django_comments.urls
+
+#
+from django.conf.urls.static import static
+from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
+###
+app_name = 'books_fbv_user'
 
 urlpatterns = [
     #url(r'^$', views.home, name='home'),
@@ -48,6 +55,11 @@ urlpatterns = [
         name='django_summernote-upload_attachment'),
 
     url(r'^blog/comments/', include('fluent_comments.urls')),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^accounts/profile/$', TemplateView.as_view(template_name='accounts/profile.html')),
+
+    path('accounts/', include('accounts.urls')),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

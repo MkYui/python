@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block contents %}
+<h1>Ok</h1>
+{% for person in people %}
+        <tr><td>{{ person.id }}</td>
+          <td>Names {{ person.Names }}</td></tr>
+          <h1>{{ user.username }}</h1>
+          <h1>{{ user.last_login }}</h1>
+          <h1>{{ user.email }}</h1>
+          <h1>{{ user.get_full_name }}</h1>
+
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
+        {% else %}
+            <p>Welcome, new user. Please log in.</p>
+        {% endif %}
+
+{% endblock %}

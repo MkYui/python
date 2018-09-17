@@ -16,7 +16,7 @@ import django
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+#AUTH_USER_MODEL = 'accounts.ProfileUsers'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,15 +46,10 @@ INSTALLED_APPS = [
     #
     'ckeditor',
     'ckeditor_uploader',
-    #
-
-#'django.contrib.sites',
 
     'django_comments',
     'crispy_forms',
     'fluent_comments',
-    #'threadedcomments',
-    #account
 
     'allauth',
     'allauth.account',
@@ -82,7 +77,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                #'django.core.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -95,8 +89,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'news_site.wsgi.application'
+AUTH_USER_MODEL = 'accounts.Users'
+#AUTH_PROFILE_MODULE = 'accounts.User'
+#AUTH_USER_MODEL = 'accounts.ProfileUsers'
 
-
+AUTHENTICATION_BACKENDS = (
+    #'myproject.auth_backends.CustomUserModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
