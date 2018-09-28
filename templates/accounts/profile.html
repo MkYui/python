@@ -5,12 +5,13 @@
 
 {% block contents %}
 {% if user.is_authenticated %}<!---->
-<a class="btn btn-primary" href="/accounts/edits" role="button">Link</a>
-<p>Welcome {{ user.username }} !!!</p>
+<a class="btn btn-primary" href="/accounts/edits" role="button">Edit Profile</a>
+<p>Welcome {{ user.username }} !!!</p><img src="{{ user.avatar.url }}" width=200px />
 <h3>Последний вход: {{ user.last_login }}</h3><!---->
 
 
   <!--Exit buuton -->
+
     <form method="post" action="{% url 'account_logout' %}">
     {% csrf_token %}
     {% if redirect_field_value %}

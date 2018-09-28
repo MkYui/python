@@ -1,16 +1,13 @@
-from django.shortcuts import render
+#from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import ProfileUsers
+#from .models import ProfileUsers
 from .models import Users
 from django.contrib.auth.models import User
-from django.views.generic import UpdateView
+#from django.views.generic import UpdateView
 #from .forms import PersonForm
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
-#from accounts.forms import PersonForm
-from accounts.models import ProfileUsers
-#from .forms import PostForm
-#from .forms import PersonForm
+
 from django.shortcuts import redirect
 
 from django.contrib.auth.decorators import login_required
@@ -18,9 +15,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
 def indexs(request):
-    #people = Person.objects.all()
+
     people = ProfileUsers.objects.filter(id=request.user.id)
-    #fields = ('Names')
     return render(request, "accounts/profile.html", {"people": people})
 
 class BookForm(ModelForm):
@@ -31,11 +27,9 @@ class BookForm(ModelForm):
 @login_required
 def book_list(request, template_name='accounts/profile_list.html'):
     if request.user:#is_user:
-        book = Users.objects.filter(id=request.user.id)#(users=request.user)
-        #profile = ProfileUsers.objects.all()
+        book = Users.objects.filter(id=request.user.id)
     else:
-        #profile = ProfileUsers.objects.all()
-        book = Users.objects.filter()#(user=request.user)
+        book = Users.objects.filter()
     data = {}
     data['object_list'] = book
     return render(request, template_name, data)
@@ -72,3 +66,6 @@ def book_delete(request, pk, template_name='accounts/profile_confirm_delete.html
         book.delete()
         return redirect('books_fbv_user:book_list')
     return render(request, template_name, {'object':book})
+
+
+###API

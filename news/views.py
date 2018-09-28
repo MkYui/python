@@ -24,10 +24,15 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView, CreateView, UpdateView
 from .forms import PersonForm
 
+from . import models
+from . import serializers
+from rest_framework import generics
 
 def news_index(request):
 
-    list_news = CatalogNews.objects.all()
+    list_news = CatalogNews.objects.filter(published=True).order_by("-id")
+    #list_news = CatalogNews.objects.filter(public_date__lte=timezone.now()).order_by('public_date')
+    #list_news = CatalogNews.objects.all()
     paginator = Paginator(list_news, 2)
 
     page = request.GET.get('page')
@@ -44,6 +49,10 @@ def news_index(request):
                }
 
     return render(request, 'news/index.html', context)
+
+class NewsListApi(generics.ListAPIView):
+    queryset = models.CatalogNews.objects.all()
+    serializer_class = serializers.NewsSerializer
 
 def news_detail(request, news_id):
     news_item = get_object_or_404(CatalogNews, pk=news_id)
@@ -80,3 +89,4 @@ class PersonUpdateView(UpdateView):
     form_class = PersonForm
     template_name = 'news/person_update_form.html'
     success_url = reverse_lazy('person_list')
+#add end

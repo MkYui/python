@@ -49,7 +49,7 @@ def home(request):
                'catalogportal': catalogportal,
                }
 
-    return render(request, 'portal/home.html', context, {'catalogportal': catalogportal})
+    return render(request, 'portal/portal_home.html', context, {'catalogportal': catalogportal})
 
 def portal_detail(request, portal_id):
     portal_item = get_object_or_404(CatalogPortal, pk=portal_id)

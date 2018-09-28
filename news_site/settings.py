@@ -49,12 +49,14 @@ INSTALLED_APPS = [
 
     'django_comments',
     'crispy_forms',
-    'fluent_comments',
+    #'fluent_comments',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
+    #
+    'rest_framework',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +71,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'news_site.urls'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 TEMPLATES = [
     {
@@ -89,9 +99,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'news_site.wsgi.application'
+
 AUTH_USER_MODEL = 'accounts.Users'
 #AUTH_PROFILE_MODULE = 'accounts.User'
-#AUTH_USER_MODEL = 'accounts.ProfileUsers'
+
 
 AUTHENTICATION_BACKENDS = (
     #'myproject.auth_backends.CustomUserModelBackend',
@@ -210,30 +221,30 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 STATIC_URL = '/static/'
 
 ###############################comment
-COMMENTS_APP = 'fluent_comments'
+#COMMENTS_APP = 'fluent_comments'
 
-FLUENT_COMMENTS_FORM_CLASS = 'fluent_comments.forms.CompactLabelsCommentForm'
+#FLUENT_COMMENTS_FORM_CLASS = 'fluent_comments.forms.CompactLabelsCommentForm'
 
 # Optional settings for the compact style:
-FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url')
-FLUENT_COMMENTS_COMPACT_GRID_SIZE = 12
-FLUENT_COMMENTS_COMPACT_COLUMN_CSS_CLASS = "col-sm-{size}"
+#FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url')
+#FLUENT_COMMENTS_COMPACT_GRID_SIZE = 12
+#FLUENT_COMMENTS_COMPACT_COLUMN_CSS_CLASS = "col-sm-{size}"
 
-FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = False
-FLUENT_COMMENTS_USE_EMAIL_MODERATION = False
-FLUENT_COMMENTS_MODERATE_AFTER_DAYS = 14
-FLUENT_COMMENTS_CLOSE_AFTER_DAYS = 60
-FLUENT_COMMENTS_AKISMET_ACTION = 'moderate'
+#FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = False
+#FLUENT_COMMENTS_USE_EMAIL_MODERATION = False
+#FLUENT_COMMENTS_MODERATE_AFTER_DAYS = 14
+#FLUENT_COMMENTS_CLOSE_AFTER_DAYS = 60
+#FLUENT_COMMENTS_AKISMET_ACTION = 'moderate'
 
-AKISMET_API_KEY = None  # Add your Akismet key here to enable Akismet support
-AKISMET_IS_TEST = True  # for development/example apps.
+#AKISMET_API_KEY = None  # Add your Akismet key here to enable Akismet support
+#AKISMET_IS_TEST = True  # for development/example apps.
 ### comment end
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Moderation
-FLUENT_COMMENTS_DEFAULT_MODERATOR = 'default'
-FLUENT_COMMENTS_CLOSE_AFTER_DAYS = None
-FLUENT_COMMENTS_MODERATE_BAD_WORDS = ()
-FLUENT_COMMENTS_MODERATE_AFTER_DAYS = None
-FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = True
+#FLUENT_COMMENTS_DEFAULT_MODERATOR = 'default'
+#FLUENT_COMMENTS_CLOSE_AFTER_DAYS = None
+#FLUENT_COMMENTS_MODERATE_BAD_WORDS = ()
+#FLUENT_COMMENTS_MODERATE_AFTER_DAYS = None
+#FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = True

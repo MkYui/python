@@ -23,7 +23,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from django.conf import settings
 from django_summernote.views import (
     SummernoteEditor, SummernoteUploadAttachment
 )
@@ -33,7 +32,7 @@ from django.views.static import serve
 from portal import views
 from django.views.generic.base import TemplateView
 import django_comments.urls
-COMMENT_URLS = django_comments.urls
+#COMMENT_URLS = django_comments.urls
 
 #
 from django.conf.urls.static import static
@@ -54,14 +53,15 @@ urlpatterns = [
     url(r'^upload_attachment/$', SummernoteUploadAttachment.as_view(),
         name='django_summernote-upload_attachment'),
 
-    url(r'^blog/comments/', include('fluent_comments.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/profile/$', TemplateView.as_view(template_name='accounts/profile.html')),
 
     path('accounts/', include('accounts.urls')),
+    url(r'^api-auth/', include('rest_framework.urls')),
+    #url(r'^shema/', schema_view)
 
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
@@ -70,5 +70,5 @@ if settings.DEBUG:
 if settings.DEBUG is False:
     urlpatterns += [url(r'^media/(?P<path>.*)$',serve,{ 'document_root': settings.MEDIA_ROOT, }), ]
 
-if settings.DEBUG is False:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#if settings.DEBUG is False:
+#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

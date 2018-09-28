@@ -12,8 +12,9 @@ urlpatterns = [
 	url(r'^summernote/', include('django_summernote.urls')),
     path('add/', PersonCreateView.as_view(), name='person_add'),
     path('<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
-    path('', PersonListView.as_view(), name='person_list')
-
-
+    path('', PersonListView.as_view(), name='person_list'),
+    
+##Api
+    path('api/', views.NewsListApi.as_view()),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

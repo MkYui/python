@@ -19,8 +19,8 @@ from importlib import import_module
 # Create your models here.
 from taggit.managers import TaggableManager
 
-from fluent_comments.moderation import moderate_model, comments_are_open, comments_are_moderated
-from fluent_comments.models import get_comments_for_model, CommentsRelation
+#from fluent_comments.moderation import moderate_model, comments_are_open, comments_are_moderated
+#from fluent_comments.models import get_comments_for_model, CommentsRelation
 
 from django.contrib.auth.models import User
 from datetime import date
@@ -58,7 +58,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
-moderate_model(
-    CatalogPortal,
+#moderate_model(
+#    CatalogPortal,
 
-)
+#)
