@@ -56,6 +56,7 @@ class NewsListApi(generics.ListAPIView):
 
 def news_detail(request, news_id):
     news_item = get_object_or_404(CatalogNews, pk=news_id)
+    context_object_name = 'categorys'
     context = {
         'page_header': news_item.title,
 

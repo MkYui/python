@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y6_h1*m9g%#0a4v&b%+$!^$u5a$=@nbnz8d!80#wi+$!sev$94'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
@@ -39,22 +39,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    #
+
+    #app
     'news',
     'accounts',
     'portal',
-    #
+
+    #edit text
     'ckeditor',
     'ckeditor_uploader',
 
+    #comment pack
     'django_comments',
     'crispy_forms',
-    #'fluent_comments',
 
+    #account pack
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    #
+
+    #rest api pack
     'rest_framework',
     'rest_framework_swagger',
 ]
@@ -188,19 +192,17 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-STATIC_URL = '/staticpath/'
+#STATIC_URL = '/staticpath/'
 #CKEDITOR_UPLOAD_PATH = "uploads/"
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media', 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-MEDIA_URL = '/media/'
 
 USE_I18N = True
 USE_L10N = True
@@ -220,31 +222,4 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 STATIC_URL = '/static/'
 
-###############################comment
-#COMMENTS_APP = 'fluent_comments'
-
-#FLUENT_COMMENTS_FORM_CLASS = 'fluent_comments.forms.CompactLabelsCommentForm'
-
-# Optional settings for the compact style:
-#FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url')
-#FLUENT_COMMENTS_COMPACT_GRID_SIZE = 12
-#FLUENT_COMMENTS_COMPACT_COLUMN_CSS_CLASS = "col-sm-{size}"
-
-#FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = False
-#FLUENT_COMMENTS_USE_EMAIL_MODERATION = False
-#FLUENT_COMMENTS_MODERATE_AFTER_DAYS = 14
-#FLUENT_COMMENTS_CLOSE_AFTER_DAYS = 60
-#FLUENT_COMMENTS_AKISMET_ACTION = 'moderate'
-
-#AKISMET_API_KEY = None  # Add your Akismet key here to enable Akismet support
-#AKISMET_IS_TEST = True  # for development/example apps.
-### comment end
-
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
-# Moderation
-#FLUENT_COMMENTS_DEFAULT_MODERATOR = 'default'
-#FLUENT_COMMENTS_CLOSE_AFTER_DAYS = None
-#FLUENT_COMMENTS_MODERATE_BAD_WORDS = ()
-#FLUENT_COMMENTS_MODERATE_AFTER_DAYS = None
-#FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = True

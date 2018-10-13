@@ -5,7 +5,6 @@ from django.utils import timezone
 from django.urls import reverse
 
 import datetime
-from django.db import models
 from django.contrib.auth.models import User
 
 from django.db.models.signals import post_save
@@ -19,22 +18,26 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 __all__ = ['AbstractAttachment', 'Attachment', ]
 
-from ckeditor.fields import RichTextField
+#from ckeditor.fields import RichTextField
 
 STATUS_CHOICES = (
-    ('d', 'Draft'),
-    ('p', 'Published'),
-    ('w', 'Withdrawn'),
+    ('d', 'Опубликовать'),
+    ('p', 'Редактировать'),
+    ('w', 'Проверить'),
 )
+class Category(models.Model):
+    name = models.CharField( max_length=64)
 
+    def __str__(self):
+        return self.name
+        
 class CatalogNews(models.Model):
-
-
 
     title = models.CharField(max_length=200)
     public_date = models.DateTimeField(blank=True, null=True)
     news_texts = RichTextUploadingField()
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, null=True)
+    category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name='category_book')
     published = models.BooleanField(default=True)
     def was_published_recently(self):
         return self.public_date >= timezone.now() - datetime.timedelta(days=1)

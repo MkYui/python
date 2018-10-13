@@ -1,2 +1,6 @@
 Login:admin
 Password: 12345678m
+
+Postgresql
+Login:ok@ok.net	
+Password: 12345678m

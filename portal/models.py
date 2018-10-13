@@ -8,7 +8,6 @@ from django.urls import reverse
 
 import datetime
 from django.db import models
-from django.contrib.auth.models import User
 
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -18,10 +17,6 @@ from django.core.exceptions import ImproperlyConfigured
 from importlib import import_module
 # Create your models here.
 from taggit.managers import TaggableManager
-
-#from fluent_comments.moderation import moderate_model, comments_are_open, comments_are_moderated
-#from fluent_comments.models import get_comments_for_model, CommentsRelation
-
 from django.contrib.auth.models import User
 from datetime import date
 
@@ -57,8 +52,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
-
-#moderate_model(
-#    CatalogPortal,
-
-#)

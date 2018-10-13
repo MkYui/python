@@ -6,7 +6,7 @@ from django_summernote.settings import summernote_config, get_attachment_model
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import CatalogNews
+from .models import CatalogNews, Category
 def make_published(modeladmin, request, queryset):
     queryset.update(status='p')
 make_published.short_description = "Mark selected stories as published"
@@ -28,3 +28,4 @@ class ArticleAdmin(admin.ModelAdmin):
         codename = get_permission_codename('publish', opts)
         return request.user.has_perm('%s.%s' % (opts.app_label, codename))
 admin.site.register(CatalogNews, ArticleAdmin)
+admin.site.register(Category)
