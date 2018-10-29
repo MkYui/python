@@ -9,22 +9,14 @@ from .views import PersonListView, PersonCreateView, PersonUpdateView
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
 
-from .views import ItemViewSet
-
-router = routers.SimpleRouter()
-router.register(r'items', ItemViewSet)
-
 urlpatterns = [
     path('', views.news_index, name='news_index'),
     url(r'^(?P<news_id>[\d+]+)$', views.news_detail, name='news_detail'),
-	#path('articles/<slug:title>/', views.news_detail, name='news_detail'),
+
 	url(r'^summernote/', include('django_summernote.urls')),
     path('add/', PersonCreateView.as_view(), name='person_add'),
     path('<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
     path('', PersonListView.as_view(), name='person_list'),
 
-##Api
-    #path('api/', views.ItemViewSet.as_view()),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += router.urls
