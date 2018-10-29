@@ -29,28 +29,16 @@ from django_summernote.views import (
 from django.conf import global_settings
 
 from django.views.static import serve
-#import views
 from portal import views
-from news.views import ItemViewSet
-
 from django.views.generic.base import TemplateView
-
-#COMMENT_URLS = django_comments.urls
 import django_comments.urls
+#COMMENT_URLS = django_comments.urls
+
 #
 from django.conf.urls.static import static
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
-
-###rest_framework
-from rest_framework import routers
-from rest_framework.routers import DefaultRouter
-
-
-router = routers.SimpleRouter()
-router.register(r'api', ItemViewSet)
-
-
+###
 app_name = 'books_fbv_user'
 
 urlpatterns = [
@@ -72,7 +60,6 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
 
 ]
-urlpatterns += router.urls
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
