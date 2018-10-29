@@ -29,10 +29,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponse
 from django.views import View
+from .models import Portals
 ##
 def home(request):
 
-    list_portal = CatalogPortal.objects.all().order_by("-id")
+    #list_portal = CatalogPortal.objects.all().order_by("-id")
+    list_portal = Portals.objects.all()
     #list_news = range(1, 1000)
     page = request.GET.get('page', 1)
 

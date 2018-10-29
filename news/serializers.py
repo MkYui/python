@@ -4,5 +4,6 @@ from . import models
 class NewsSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id', 'title', 'news_texts',)
+
+        fields = ('url', 'id', 'title', 'news_texts', 'created_at', 'updated_at',)
         model = models.CatalogNews

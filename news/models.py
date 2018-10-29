@@ -14,6 +14,8 @@ from django.core.files.storage import default_storage
 from django.core.exceptions import ImproperlyConfigured
 from importlib import import_module
 
+from rest_framework import serializers
+
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 __all__ = ['AbstractAttachment', 'Attachment', ]
@@ -30,11 +32,13 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-        
+
 class CatalogNews(models.Model):
 
     title = models.CharField(max_length=200)
-    public_date = models.DateTimeField(blank=True, null=True)
+    #public_date = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, editable=True)
     news_texts = RichTextUploadingField()
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, null=True)
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name='category_book')
