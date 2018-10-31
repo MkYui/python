@@ -9,7 +9,7 @@ from ckeditor.widgets import CKEditorWidget
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
 
-from .models import CatalogNews, Category
+from .models import CatalogNews, Category, Comment
 
 def make_published(modeladmin, request, queryset):
     queryset.update(status='p')
@@ -85,3 +85,4 @@ class AuthorAdmin(admin.ModelAdmin):
 admin.site.register(CatalogNews,  AuthorAdmin)
 
 admin.site.register(Category)
+admin.site.register(Comment)

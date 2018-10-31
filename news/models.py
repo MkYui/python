@@ -43,6 +43,7 @@ class CatalogNews(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, null=True)
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name='category_book')
     published = models.BooleanField(default=True)
+    port = models.BooleanField(default=False)
     def was_published_recently(self):
         return self.public_date >= timezone.now() - datetime.timedelta(days=1)
 
@@ -57,3 +58,17 @@ class CatalogNews(models.Model):
 
     def ntext(self):
         return self.news_texts
+
+class Comment(models.Model):
+    post = models.ForeignKey('CatalogNews', on_delete=models.CASCADE, related_name='comments',default='comments')
+    author = models.CharField(max_length=200)
+    text = models.TextField(max_length=200, default='comments')
+    created_date = models.DateTimeField(default=timezone.now)
+    approved_comment = models.BooleanField(default=False)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def __str__(self):
+        return self.text

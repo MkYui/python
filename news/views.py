@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import permission_required
 
 from .models import CatalogNews
+from .models import Comment
 # Create your views here.
 
 from django.http import Http404
@@ -24,6 +25,7 @@ from django.views.generic import TemplateView
 from django.views.generic import ListView, CreateView, UpdateView
 from .forms import PersonForm
 
+from django.contrib.auth.decorators import login_required
 from . import models
 from . import serializers
 from rest_framework import generics
@@ -31,9 +33,11 @@ from rest_framework import generics
 from .serializers import NewsSerializer
 from rest_framework import routers, serializers, viewsets
 
+from .forms import CommentForm
+
 def news_index(request):
 
-    list_news = CatalogNews.objects.filter(published=True).order_by("-id")
+    list_news = CatalogNews.objects.order_by('-created_at')
     paginator = Paginator(list_news, 2)
 
     page = request.GET.get('page')
@@ -49,7 +53,7 @@ def news_index(request):
                'catalognews': catalognews,
                }
 
-    return render(request, 'news/index.html', context)
+    return render(request, 'news/index.html', context , {'catalognews': catalognews,})
 
 def news_detail(request, news_id):
     news_item = get_object_or_404(CatalogNews, pk=news_id)
@@ -88,7 +92,30 @@ class PersonUpdateView(UpdateView):
     template_name = 'news/person_update_form.html'
     success_url = reverse_lazy('person_list')
 #add end
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(CatalogNews, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('news_detail', news_id=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'news/add_comment_to_post.html', {'form': form})
 
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('detail', pk=comment.post.pk)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('detail', pk=comment.post.pk)
 #REST API
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = CatalogNews.objects.all()
