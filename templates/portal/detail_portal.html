@@ -9,7 +9,7 @@
 
       <h1>{{portal_item}}</h1>
       <p>{{portal_item.public_date}}</p>
-      <h2>{{portal_item.portal_texts|safe}}</h2>
+      <h2>{{portal_item.news_texts|safe}}</h2>
 
 {% for comment in portal_item.comments.all %}
     <div class="comment">

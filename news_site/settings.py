@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'django_filters',
     #app
     'news',
     'accounts',
@@ -72,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'django.contrib.admin.SimpleListFilter',
 ]
 
 ROOT_URLCONF = 'news_site.urls'

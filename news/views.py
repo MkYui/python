@@ -64,8 +64,11 @@ def news_detail(request, news_id):
         'news_item': news_item,
 
     }
+
     return render(request, 'news/detail.html', context)
 
+    #def get_object(self):
+     #       return get_object_or_404(CatalogNews, slug__iexact=self.kwargs['slug'])
 # page error
 def handler404(request):
     return render(request, '404.html')

@@ -13,6 +13,7 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
     path('', views.news_index, name='news_index'),
     url(r'^(?P<news_id>[\d+]+)$', views.news_detail, name='news_detail'),
+    #url(r'^articles/(?P<slug>[-\w]+)/$', views.news_detail, name='news_detail'),
 
 	url(r'^summernote/', include('django_summernote.urls')),
     path('add/', PersonCreateView.as_view(), name='person_add'),

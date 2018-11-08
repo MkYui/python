@@ -6,31 +6,16 @@ from django_summernote.settings import summernote_config, get_attachment_model
 
 from ckeditor.widgets import CKEditorWidget
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django.utils.translation import gettext_lazy as _
 
 from .models import CatalogNews, Category, Comment
 
-def make_published(modeladmin, request, queryset):
-    queryset.update(status='p')
-make_published.short_description = "Mark selected stories as published"
 
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['title', 'status']
-    ordering = ['title']
-    actions = [make_published]
+from django.contrib.admin.filters import RelatedFieldListFilter
+from django.contrib.admin import SimpleListFilter
+import django_filters
 
-    actions = ['make_published']
-
-    def make_published(self, request, queryset):
-        queryset.update(status='p')
-    make_published.allowed_permissions = ('publish',)
-
-    def has_publish_permission(self, request):
-        """Does the user have the publish permission?"""
-        opts = self.opts
-        codename = get_permission_codename('publish', opts)
-        return request.user.has_perm('%s.%s' % (opts.app_label, codename))
 
 class ListCreate(admin.SimpleListFilter):
     # Human-readable title which will be displayed in the
@@ -48,12 +33,14 @@ class ListCreate(admin.SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
-        if self.value() == 1:
-            queryset = queryset.filter(created_at=now() - timedelta(days=1))
-        elif self.value() == 2:
-            queryset = queryset.filter(created_at=now() - timedelta(days=3))
-        elif self.value() == 3:
-            queryset = queryset.filter(created_at=now() - timedelta(days=7))
+        now = datetime.now()
+        print(type(self.value()), 'create')
+        if self.value() == '1':
+            queryset = queryset.filter(created_at__gte=now - timedelta(days=1))
+        elif self.value() == '2':
+            queryset = queryset.filter(created_at__gte=now - timedelta(days=3))
+        elif self.value() == '3':
+            queryset = queryset.filter(created_at__gte=now - timedelta(days=7))
         return queryset
 
 class ListUpdate(admin.SimpleListFilter):
@@ -72,17 +59,19 @@ class ListUpdate(admin.SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
-        if self.value() == 1:
-            queryset = queryset.filter(updated_at=now() - timedelta(days=1))
-        elif self.value() == 2:
-            queryset = queryset.filter(updated_at=now() - timedelta(days=3))
-        elif self.value() == 3:
-            queryset = queryset.filter(updated_at=now() - timedelta(days=7))
+        now = datetime.now()
+        print(type(self.value()), "update")
+        if self.value() == '1':
+            queryset = queryset.filter(updated_at__gte=now - timedelta(days=1))
+        elif self.value() == '2':
+            queryset = queryset.filter(updated_at__gte=now - timedelta(days=3))
+        elif self.value() == '3':
+            queryset = queryset.filter(updated_at__gte=now - timedelta(days=7))
         return queryset
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_filter = ( ListCreate, ListUpdate,)
-admin.site.register(CatalogNews,  AuthorAdmin)
+    list_filter = (  ListUpdate, ListCreate, )
 
+admin.site.register(CatalogNews,  AuthorAdmin)
 admin.site.register(Category)
 admin.site.register(Comment)

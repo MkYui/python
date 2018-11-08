@@ -14,14 +14,13 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 #Models
 #from .models import Comment
-#from .models import CatalogPortal
-#from .models import Portals
+
 from news.models import CatalogNews
 from news.models import Comment
 
 from django.views.generic import ListView, DetailView
 from django.views.decorators.csrf import csrf_protect
-#from django.shortcuts import render, get_object_or_404
+
 from django.template.context import RequestContext
 ##
 #from .forms import CommentForm
@@ -63,15 +62,15 @@ def portal_detail(request, portal_id):
     }
     return render(request, 'portal/detail_portal.html', context)
 
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(CatalogNews, pk=pk)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('portal_detail', portal_id=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'portal/add_comment_to_post.html', {'form': form})
+#def add_comment_to_post(request, pk):
+#    post = get_object_or_404(CatalogNews, pk=pk)
+#    if request.method == "POST":
+#        form = CommentForm(request.POST)
+#        if form.is_valid():
+#            comment = form.save(commit=False)
+#            comment.post = post
+#            comment.save()
+#            return redirect('portal_detail', portal_id=post.pk)
+#    else:
+#        form = CommentForm()
+#    return render(request, 'portal/add_comment_to_post.html', {'form': form})
