@@ -1,28 +1,28 @@
 # -*- coding: utf-8 -*-
 
 #from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import permission_required
 
-from .models import CatalogNews
-from .models import Comment
+from .models import CatalogNews, Comment
+#from .models import Comment
 # Create your views here.
 
-from django.http import Http404
-from django.shortcuts import get_object_or_404, render
+#from django.http import Http404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 
 #from django.shortcuts import render
-from django.shortcuts import redirect
+#from django.shortcuts import redirect
 
 from django.urls import reverse_lazy
 from django.utils import timezone
 from datetime import timedelta as tdelta
-from django.views.generic import TemplateView
+#from django.views.generic import TemplateView
 # Create your views here.
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 from .forms import PersonForm
 
 from django.contrib.auth.decorators import login_required
@@ -55,20 +55,17 @@ def news_index(request):
 
     return render(request, 'news/index.html', context , {'catalognews': catalognews,})
 
-def news_detail(request, news_id):
-    news_item = get_object_or_404(CatalogNews, pk=news_id)
+def news_detail(request, slug ):#news_id):
+    news_item = get_object_or_404(CatalogNews, slug=slug)#pk=news_id)
     context_object_name = 'categorys'
     context = {
         'page_header': news_item.title,
 
         'news_item': news_item,
-
     }
 
     return render(request, 'news/detail.html', context)
 
-    #def get_object(self):
-     #       return get_object_or_404(CatalogNews, slug__iexact=self.kwargs['slug'])
 # page error
 def handler404(request):
     return render(request, '404.html')

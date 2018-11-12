@@ -16,8 +16,8 @@
 {% block content %}
   {% for news_item in catalognews %}
     <div>
-      
-      <h2><a href="{% url 'news_detail' news_item.id %}">{{ news_item.title}}</a><h2>
+
+      <h2><a href="{% url 'news_detail' news_item.slug %}">{{ news_item.title}}</a><h2>
         <h4>{{news_item.created_at}}</h4>
         <hr>
       <div>

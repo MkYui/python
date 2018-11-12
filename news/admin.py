@@ -16,6 +16,8 @@ from django.contrib.admin.filters import RelatedFieldListFilter
 from django.contrib.admin import SimpleListFilter
 import django_filters
 
+#class AdminEntries(admin.ModelAdmin):
+#    prepopulated_fields = { 'slug': ['title'] }
 
 class ListCreate(admin.SimpleListFilter):
     # Human-readable title which will be displayed in the
@@ -70,8 +72,9 @@ class ListUpdate(admin.SimpleListFilter):
         return queryset
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_filter = (  ListUpdate, ListCreate, )
+    list_filter = (  ListUpdate, ListCreate)
+    prepopulated_fields = {"slug": ("title",)}
 
-admin.site.register(CatalogNews,  AuthorAdmin)
+admin.site.register(CatalogNews, AuthorAdmin)
 admin.site.register(Category)
 admin.site.register(Comment)

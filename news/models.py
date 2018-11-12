@@ -38,16 +38,15 @@ class CatalogNews(models.Model):
     title = models.CharField(max_length=200)
     #public_date = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)#, null=True)
-    #created_at = models.DateTimeField(blank=True, null=True)
-    #updated_at = models.DateTimeField(auto_now=True)#, null=True)
     updated_at = models.DateTimeField(auto_now_add=True)#, null=True)
-    #updated_at = models.DateTimeField(blank=True, null=True)
+
+    slug = models.SlugField(max_length=100, unique=True, null=True)
     news_texts = RichTextUploadingField()
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, null=True)
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name='category_book')
     published = models.BooleanField(default=True)
     port = models.BooleanField(default=False)
-    
+
     def was_published_recently(self):
         return self.public_date >= timezone.now() - datetime.timedelta(days=1)
 
@@ -57,6 +56,9 @@ class CatalogNews(models.Model):
     def contents(self):
         return self.contentss
 
+    def slu(self):
+        return self.slug
+        
     def cre(self):
         return self.created_at
 
@@ -66,14 +68,8 @@ class CatalogNews(models.Model):
     def textn(self):
         return self.text_n
 
-    #def get_absolute_url(self):
-     #   return reverse('detail', args=[str(self.slug)])
-
     def ntext(self):
         return self.news_texts
-
-    #def __str__(self):
-     #   return '#{} {}'.format(self.title, self.created_at)# self.user.full_name)
 
 class Comment(models.Model):
     post = models.ForeignKey('CatalogNews', on_delete=models.CASCADE, related_name='comments',default='comments')
