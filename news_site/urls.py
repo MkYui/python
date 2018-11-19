@@ -22,7 +22,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
+from rest_framework_swagger.views import get_swagger_view
 from django_summernote.views import (
     SummernoteEditor, SummernoteUploadAttachment
 )
@@ -50,11 +50,15 @@ from rest_framework.routers import DefaultRouter
 router = routers.SimpleRouter()
 router.register(r'api', ItemViewSet)
 
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Pastebin API')
 
 app_name = 'books_fbv_user'
 
 urlpatterns = [
 
+    url(r'^tes/', schema_view),
     path('', include('portal.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),

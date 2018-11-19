@@ -1,4 +1,5 @@
 pet project
 News-
-	Create API
+	Create restful API
 	Admin sorting
+	Create news

@@ -44,7 +44,7 @@ class CatalogNews(models.Model):
     news_texts = RichTextUploadingField()
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, null=True)
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE, related_name='category_book')
-    published = models.BooleanField(default=True)
+    published = models.BooleanField(default=False)
     port = models.BooleanField(default=False)
 
     def was_published_recently(self):
@@ -58,7 +58,7 @@ class CatalogNews(models.Model):
 
     def slu(self):
         return self.slug
-        
+
     def cre(self):
         return self.created_at
 

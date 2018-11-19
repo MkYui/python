@@ -32,6 +32,7 @@
         <a class="nav-item nav-link active" href="/">Домой<span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link active" href="/news/">Новости <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="/oiijoioj/">Page error</a>
+        <a class="nav-item nav-link active" href="/news/search/">Поиск <span class="sr-only">(current)</span></a>
         <!--<a class="nav-item nav-link active" href="/accounts/login/">login <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link active" href="/accounts/signup/">Regist <span class="sr-only">(current)</span></a>
         <<a class="nav-item nav-link active" href="/accounts/password/reset/">Reset password <span class="sr-only">(current)</span></a>-->
@@ -42,7 +43,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           {% if user.is_authenticated %}
           <a class="dropdown-item" href="/accounts/profile/">Профиль</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item" href="/news/add/">Добавить новость</a>
           {% else %}
           {% endif %}
           {% if user.is_authenticated %}

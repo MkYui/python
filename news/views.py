@@ -1,43 +1,33 @@
 # -*- coding: utf-8 -*-
 
-#from django.shortcuts import render
 from django.http import HttpResponse, Http404
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import permission_required
-
-from .models import CatalogNews, Comment
-#from .models import Comment
-# Create your views here.
-
-#from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
-
-#from django.shortcuts import render
-#from django.shortcuts import redirect
-
 from django.urls import reverse_lazy
 from django.utils import timezone
 from datetime import timedelta as tdelta
-#from django.views.generic import TemplateView
-# Create your views here.
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView
-from .forms import PersonForm
-
 from django.contrib.auth.decorators import login_required
+
+#Forms
+from .forms import PersonForm, CommentForm, SearchNewsForm
+#models
 from . import models
+from .models import CatalogNews, Comment
+#REST
 from . import serializers
 from rest_framework import generics
-
 from .serializers import NewsSerializer
 from rest_framework import routers, serializers, viewsets
 
-from .forms import CommentForm
+from search_views.views import SearchListView
+from search_views.filters import BaseFilter
 
 def news_index(request):
 
-    list_news = CatalogNews.objects.order_by('-created_at')
+    list_news = CatalogNews.objects.order_by('-created_at').filter(published=True)
     paginator = Paginator(list_news, 2)
 
     page = request.GET.get('page')
@@ -120,3 +110,19 @@ def comment_remove(request, pk):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = CatalogNews.objects.all()
     serializer_class = NewsSerializer
+
+
+#Search
+
+class ActorsFilter(BaseFilter):
+    search_fields = {
+        "Поиск" : ["title", "news_texts"],
+
+    }
+
+class SearchView(SearchListView):
+    model = CatalogNews
+    template_name = "search_list.html"
+
+    form_class = SearchNewsForm
+    filter_class = ActorsFilter

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Форма поиска</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+  </head>
+  <body>
+    {% block contents %}
+    <div class="container">
+      <h2>Поиск</h2>
+
+      <div class="panel">
+        <div class="panel-body">
+          <form class="form" action="" method="get">
+            {{form.as_p}}
+            <a class="btn btn-default" href="{% url 'actors' %}">Очистить</a>
+            <button type="submit" class="btn btn-primary">Поиск</button>
+          </form>
+        </div>
+
+      </div>
+
+      <table class="table table-striped">
+        <tr>
+          <th>
+            Название
+          </th>
+          <th>
+            Дата
+          </th>
+        </tr>
+        {% for search_news in object_list %}
+        <tr>
+          <td>
+
+            <div class="infinite-item"><h3><a href="{% url 'portal_detail' search_news.id %}">{{ search_news.title}}</a></h3>
+          </td>
+          <td>
+            {{search_news.created_at}}
+
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+
+    </div>
+    {% endblock %}
+  </body>
+</html>

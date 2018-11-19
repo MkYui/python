@@ -30,3 +30,6 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('author', 'text',)
+
+class SearchNewsForm(forms.Form):
+    Поиск = forms.CharField( required=False)
