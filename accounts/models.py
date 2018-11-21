@@ -19,7 +19,7 @@ from django.contrib.auth.base_user import BaseUserManager
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, email, username, full_name, password, **extra_fields):
+    def _create_user(self, email, username, first_name, password, last_name, **extra_fields):
         """
         Create and save a user with the given username, email,
         full_name, and password.
@@ -28,26 +28,26 @@ class UserManager(BaseUserManager):
             raise ValueError('The given email must be set')
         if not username:
             raise ValueError('The given username must be set')
-        if not full_name:
+        if not first_name:
             raise ValueError('The given full name must be set')
         email = self.normalize_email(email)
         username = self.model.normalize_username(username)
         user = self.model(
-            email=email, username=username, full_name=full_name,
+            email=email, username=username, first_name=first_name, last_name=last_name,
             **extra_fields
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, username, full_name, password=None, **extra_fields):
+    def create_user(self, email, username, first_name, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(
-            email, username, full_name, password, **extra_fields
+            email, username, first_name, password, **extra_fields
         )
 
-    def create_superuser(self, email, username, full_name, password, **extra_fields):
+    def create_superuser(self, email, username, first_name, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -57,7 +57,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(
-            email, username, full_name, password, **extra_fields
+            email, username, first_name, password, **extra_fields
         )
 
 
@@ -70,7 +70,8 @@ class Users(AbstractBaseUser, PermissionsMixin):
         validators=[username_validator],
     )
     email = models.EmailField(unique=True)
-    full_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255, null=True)
     bio = models.CharField(
         max_length=160,
         null=True,
@@ -85,7 +86,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'full_name']
+    REQUIRED_FIELDS = ['username', 'first_name']
 
     objects = UserManager()
 
@@ -96,7 +97,10 @@ class Users(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def get_full_name(self):
-        return self.full_name
+        return self.first_name
+
+    def get_full_name(self):
+        return self.last_name
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)

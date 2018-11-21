@@ -9,6 +9,7 @@ from django.utils import timezone
 from datetime import timedelta as tdelta
 from django.views.generic import TemplateView
 
+
 #Models
 from news.models import CatalogNews, Comment
 from django.views.generic import ListView, DetailView

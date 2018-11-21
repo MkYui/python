@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
+#REST_FRAMEWORK
+from rest_framework import viewsets
+from .serializers import UsersSerializer
 
 from django.shortcuts import redirect
 
@@ -37,6 +40,11 @@ def book_list(request, template_name='accounts/profile_list.html'):
     data['object_list'] = book
     return render(request, template_name, data)
 
+#REST_FRAMEWORK
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+
+    queryset = Users.objects.all()
+    serializer_class = UsersSerializer
 
 
 @login_required

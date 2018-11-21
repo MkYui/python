@@ -61,6 +61,10 @@ INSTALLED_APPS = [
 
     #rest api pack
     'rest_framework',
+
+    'rest_auth.registration',
+    'rest_auth',
+    'rest_framework.authtoken',
     'rest_framework_swagger',
 ]
 
@@ -73,7 +77,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    #'django.contrib.admin.SimpleListFilter',
+
 ]
 
 ROOT_URLCONF = 'news_site.urls'
@@ -83,7 +87,14 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+
     ]
+
 }
 
 TEMPLATES = [
@@ -230,3 +241,10 @@ SWAGGER_SETTINGS = {
     'LOGIN_URL': 'rest_framework:login',
     'LOGOUT_URL': 'rest_framework:logout',
 }
+
+#REST_SESSION_LOGIN = True
+
+#SWAGGER_SETTINGS = {
+#    'LOGIN_URL': 'login',
+#    'LOGOUT_URL': 'logout',
+#}

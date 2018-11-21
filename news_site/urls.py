@@ -32,10 +32,10 @@ from django.views.static import serve
 #import views
 from portal import views
 from news.views import ItemViewSet
+from accounts.views import UsersSerializer, UserViewSet
 
 from django.views.generic.base import TemplateView
 
-#COMMENT_URLS = django_comments.urls
 import django_comments.urls
 #
 from django.conf.urls.static import static
@@ -45,12 +45,12 @@ from django.contrib.auth.decorators import login_required
 ###rest_framework
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
-
-
-router = routers.SimpleRouter()
-router.register(r'api', ItemViewSet)
-
 from rest_framework_swagger.views import get_swagger_view
+
+#router = DefaultRouter()
+router = routers.SimpleRouter()
+router.register(r'news_api', ItemViewSet, )
+router.register(r'user_api', UserViewSet, )
 
 schema_view = get_swagger_view(title='Pastebin API')
 
@@ -58,7 +58,10 @@ app_name = 'books_fbv_user'
 
 urlpatterns = [
 
-    url(r'^tes/', schema_view),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^doc/', schema_view),
+    #url(r'api/', include(router.urls)),
     path('', include('portal.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),

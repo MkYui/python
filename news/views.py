@@ -10,12 +10,12 @@ from django.utils import timezone
 from datetime import timedelta as tdelta
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 from django.contrib.auth.decorators import login_required
-
 #Forms
 from .forms import PersonForm, CommentForm, SearchNewsForm
 #models
 from . import models
 from .models import CatalogNews, Comment
+from accounts.models import Users
 #REST
 from . import serializers
 from rest_framework import generics
@@ -107,7 +107,7 @@ def comment_remove(request, pk):
     comment.delete()
     return redirect('detail', pk=comment.post.pk)
 #REST API
-class ItemViewSet(viewsets.ModelViewSet):
+class ItemViewSet(viewsets.ModelViewSet):#(viewsets.ModelViewSet):
     queryset = CatalogNews.objects.all()
     serializer_class = NewsSerializer
 
